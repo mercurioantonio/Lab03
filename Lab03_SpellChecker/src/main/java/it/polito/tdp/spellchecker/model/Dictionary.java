@@ -33,7 +33,7 @@ public class Dictionary {
 		}
 	}
 	
-	public List<RichWord> spellCheckText(List<String> inputTextList){
+/*	public List<RichWord> spellCheckText(List<String> inputTextList){
 		
 		boolean flag ;
 		String word ="";
@@ -60,6 +60,91 @@ public class Dictionary {
 		}
 		return paroleCorrette;		
 	}
+*/
+       public List<RichWord> spellCheckTextLinear(List<String> inputTextList){
+		
+		boolean flag ;
+		String word ="";
+		
+		
+		for(String w : inputTextList) {
+			word = w;
+			flag = false;
+			for(String d : dizionario) {
+			    if(w.equals(d)) {
+			    	flag = true;
+			    	break;
+			    } 	
+			}
+			paroleCorrette.add(new RichWord(word, flag));
+		}
+		
+		
+		for(RichWord s : paroleCorrette) {
+			if(s.corretto == false) {
+				paroleSbagliate = paroleSbagliate + s.word + "\n" ;
+				numberError++;
+			}
+		}
+		return paroleCorrette;		
+	}
+       
+    
+       public List<RichWord> spellCheckTextDicotomic(List<String> inputTextList){
+   		
+   		boolean flag ;
+   		String word ="";
+   		
+   		
+   		for(String w : inputTextList) {
+   			word = w;
+   			flag = false;
+   			List<String> dizionario2 = new ArrayList<String>();
+   			dizionario2 = dizionario;
+   			
+   			int i = dizionario2.size()/2;
+   			
+   			while(!(word.equals(dizionario2.get(i))) && dizionario2.size()>1) {
+   			
+   				
+   			
+   			if(word.compareTo(dizionario2.get(i)) < 0)
+   			{
+   			 dizionario2 = dizionario2.subList(0, i);
+   			 i = i/2;
+   			 
+   			 
+   				 				
+   			}   
+   			else if (word.compareTo(dizionario2.get(i)) >0) {
+   				
+   				dizionario2 =  dizionario2.subList(i+1, dizionario2.size());
+   				i = i/2;
+   				
+   				
+   			}
+   			}
+   			
+   			if(word.equals(dizionario2.get(i))) {
+   				flag = true;
+   				paroleCorrette.add(new RichWord(word, flag));
+   				
+   			}
+   			else {
+   				paroleCorrette.add(new RichWord(word, flag));
+   				
+   			}
+   		}
+   		
+   		
+   		for(RichWord s : paroleCorrette) {
+   			if(s.corretto == false) {
+   				paroleSbagliate = paroleSbagliate + s.word + "\n" ;
+   				numberError++;
+   			}
+   		}
+   		return paroleCorrette;		
+   	}
 
 	public String getParoleSbagliate() {
 		return paroleSbagliate;

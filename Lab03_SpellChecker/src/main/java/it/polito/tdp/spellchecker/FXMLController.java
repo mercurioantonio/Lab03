@@ -73,7 +73,7 @@ public class FXMLController {
     	}
     	
     	long in = System.nanoTime();
-    	model.spellCheckText(parole);
+    	model.spellCheckTextDicotomic(parole);
     	long fin = System.nanoTime();
     	
     	double diff =  (double) ((fin-in) * 10E-9);
